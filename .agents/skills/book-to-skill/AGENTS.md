@@ -106,3 +106,15 @@ Live model experiments are expensive and are never the first validation step.
 ## Instruction scope
 
 This root file applies repository-wide. A more deeply nested `AGENTS.md` may add narrower instructions for its subtree; the more specific file wins when instructions conflict. Direct user/system instructions take precedence over repository guidance.
+
+## Cursor Cloud specific instructions
+
+The extractor in this checkout is the Python project in `.agents/skills/book-to-skill` (this directory), not the hubery repository root. Run the validation gates from here:
+
+```bash
+pytest -q
+ruff check .
+python3 tools/validate_skill.py SKILL.md
+```
+
+Cloud Agent images put `pytest`, `ruff`, and `book-to-skill` on `PATH`. Optional extractors for HTML, EPUB, PDF, DOCX, and RTF are installed for both the `book-to-skill` command and `python3`, and `pdftotext` comes from `poppler-utils`. `docling` (technical PDF mode) and Calibre (`ebook-convert`, only required for MOBI/AZW) are not installed; `book-to-skill --check` reports those gaps. Dependency-free and standard text extraction still run with `book-to-skill <file> --mode text --install-missing no`.
