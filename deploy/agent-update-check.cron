@@ -1,0 +1,8 @@
+# Sunday 20:00 Asia/Shanghai. This host clock is UTC, and cron does not
+# apply CRON_TZ, so 12:00 UTC is 20:00 in Shanghai. --scheduled checks that
+# clock again and skips the run if it is any other hour.
+# Agents that are already current are omitted. No mail is sent when none changed.
+SHELL=/bin/sh
+HOME=/home/ubuntu
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+0 12 * * 0 ubuntu /usr/bin/python3 /usr/local/bin/check-agent-updates.py --scheduled >> /home/ubuntu/.local/state/agent-update-check.log 2>&1
